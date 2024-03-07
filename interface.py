@@ -1,3 +1,4 @@
+
 from tkinter import *
 
 # def fenetre
@@ -12,6 +13,7 @@ partie = Canvas(fenetre, width=1200, height=650, bg="purple", highlightthickness
 
 #importation images
 img_bouton_nouvelle_partie = PhotoImage(file="images/b_new_game.png")
+img_labyrinthe = PhotoImage(file = "images/labyrinthe.png")
 
 #def fonctions
 def nouvelle_partie(event):
