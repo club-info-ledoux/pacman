@@ -515,5 +515,3 @@ def quality_check(map):
     return result
 
 map_generator = MapGenerator()
-
-print(map_generator.generate_map())

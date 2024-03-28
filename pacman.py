@@ -32,6 +32,7 @@ class Joueur():
             self.afficher(self.direction, self.x, self.y)
         else:
             pass
+    
     def verif_collision(self,x,y):
         if self.map[(y-32)//32][(x-64)//32]=="O":
             self.canvas.delete(self.liste_objet[(y-32)//32][(x-64)//32])
@@ -68,16 +69,8 @@ class Joueur():
             self.canvas.itemconfigure(self.image, image=self.gif)
             self.direction = 2
 
-    def display_gif(self):
-        self.ind += 1
-        if self.ind == 4:
-            self.ind = 0
-        self.gif.configure(format="gif index- " + str(self.ind))
-        window.after(100, self.display_gif)
-
-
     #animation du titre
-    def update_image(self,delay=200):
+    def update_image(self,delay=150):
         self.ind += 1
         if self.ind == 4: self.ind = 0
         self.gif.configure(format="gif -index " + str(self.ind))

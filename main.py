@@ -5,8 +5,8 @@ from map import *
 
 window=tkinter.Tk()
 canvas=tkinter.Canvas(window,width=992,height=1200,background="black")
-image=tkinter.PhotoImage(file="case-mur.png")
-image2=tkinter.PhotoImage(file="case_pieces.png")
+image=tkinter.PhotoImage(file="images/case_mur.png")
+image2=tkinter.PhotoImage(file="images/case_pieces.png")
 
 canvas.pack(side="top")
 
