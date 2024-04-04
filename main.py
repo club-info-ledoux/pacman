@@ -1,5 +1,6 @@
 import tkinter
 import pacman
+import ennemis
 from map import *
 #import map #Nathan doit mettre
 
@@ -26,16 +27,16 @@ for i in range(len(map)):
         if map[i][j]=="O":
             nb_piece+=1
             liste_objet[i][j]=canvas.create_image(64+j*32,32+i*32,image=image2)
+        if map[i][j]=="U":
+            map[i][j]="."
 
 
+fantome_bleu=ennemis.Fantome(window,canvas,map,liste_objet,480,512,nb_piece,"bleu")
+fantome_rouge=ennemis.Fantome(window,canvas,map,liste_objet,544,512,nb_piece,"rouge")
 
-j1=pacman.Joueur(window,canvas,map,liste_objet,x,y,nb_piece)
+j1=pacman.Joueur(window,canvas,map,liste_objet,x,y,nb_piece,[fantome_bleu, fantome_rouge])
 j1.update_image()
 
 canvas.focus_set()
-canvas.bind("<d>", j1.modifier_direction)
-canvas.bind("<z>", j1.modifier_direction)
-canvas.bind("<s>", j1.modifier_direction)
-canvas.bind("<q>", j1.modifier_direction)
 
 window.mainloop()
