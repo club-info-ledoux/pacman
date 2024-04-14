@@ -49,9 +49,6 @@ class Joueur():
             self.afficher(self.direction, self.x, self.y)
         else:
             pass
-
-        # self.map[self.x][self.y] = "p"
-    
     def verif_collision(self,x,y):
         
         if self.map[(y-32)//32][(x-64)//32]=="f":
