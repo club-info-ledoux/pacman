@@ -11,7 +11,7 @@ menu.pack()
 partie = Canvas(fenetre, bg="purple", highlightthickness=0)
 
 #importation images
-img_bouton_nouvelle_partie = PhotoImage(file="images/b_new_game.png")
+img_bouton_nouvelle_partie = PhotoImage(file="assets/images/b_new_game.png")
 
 #def fonctions
 def nouvelle_partie(event):

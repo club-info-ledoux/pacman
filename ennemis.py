@@ -4,13 +4,14 @@ import fantome
 
 class Fantome():
     def __init__(self,window,canvas,map,liste_objet,x,y,nb_piece,couleur):
+        print("fantome créé")
         self.direction=1
         self.cst_move = ((0,-32),(32,0),(0,32),(-32,0))
         self.x=x
         self.y=y
         self.ind = -1
         self.nb_piece=nb_piece
-        self.img = tkinter.PhotoImage(file="fantome_" + couleur + ".gif")
+        self.img = tkinter.PhotoImage(file="assets/images/fantomes/fantome_" + couleur + ".png")
         self.canvas = canvas
         self.image = self.canvas.create_image(self.x,self.y,image=self.img)
         self.map=map
@@ -20,16 +21,16 @@ class Fantome():
         self.update()
 
         if fantome.MANUEL:
-            canvas.bind("<d>", self.modifier_direction)
-            canvas.bind("<z>", self.modifier_direction)
-            canvas.bind("<s>", self.modifier_direction)
-            canvas.bind("<q>", self.modifier_direction)
+            canvas.bind("<d>", self.entree_direction)
+            canvas.bind("<z>", self.entree_direction)
+            canvas.bind("<s>", self.entree_direction)
+            canvas.bind("<q>", self.entree_direction)
 
 
 
     def update(self):
         self.deplacement()
-        self.modifier_direction(None)
+        self.entree_direction(None)
         return (self.x, self.y)
 
     def deplacement(self):
@@ -58,31 +59,38 @@ class Fantome():
     def afficher(self, direction, x, y):
         self.canvas.coords(self.image, x, y)
 
-    def modifier_direction(self, event):
-        # direction = event.char
+    def entree_direction(self,event):
         if fantome.MANUEL and event != None: 
-            direction = event.char
+            self.last_input = event.char
         elif not fantome.MANUEL and event == None:
-            direction = fantome.play(self.map, self.couleur)
+            self.last_input = fantome.play(self.map, self.couleur)
         else:
             return
         
-
-        if direction == "d":
-            self.direction = 1
-            self.canvas.itemconfigure(self.image, image=self.img)
-        elif direction == "z":
-            self.direction = 0
-            self.canvas.itemconfigure(self.image, image=self.img)
-        elif direction == "q":
-            self.direction = 3
-            self.canvas.itemconfigure(self.image, image=self.img)
-        elif direction == "s":
-            self.canvas.itemconfigure(self.image, image=self.img)
-            self.direction = 2
+        self.direction_waiting = True
+        self.modifier_direction()
 
 
+    def modifier_direction(self):
+        if self.direction_waiting:
+            if self.last_input == "z" and self.verif_collision(self.x+ self.cst_move[0][0], self.y+ self.cst_move[0][1]) != "#" and self.direction != 2:
+                self.direction = 0
+                self.direction_waiting = False
 
+            elif self.last_input == "q" and self.verif_collision(self.x+ self.cst_move[3][0], self.y+ self.cst_move[3][1]) != "#" and self.direction != 1:
+                self.direction = 3
+                self.direction_waiting = False
+
+            elif self.last_input == "s" and self.verif_collision(self.x+ self.cst_move[2][0], self.y+ self.cst_move[2][1]) != "#" and self.direction != 0:
+                self.direction = 2
+                self.direction_waiting = False
+
+            elif self.last_input == "d" and self.verif_collision(self.x+ self.cst_move[1][0], self.y+ self.cst_move[1][1]) != "#" and self.direction != 3:
+                self.direction = 1
+                self.direction_waiting = False
+
+            else:
+                self.window.after(100, self.modifier_direction)
 
 
 
